@@ -21,7 +21,9 @@ static bool init_guard = false;
 #endif
 
 bool CPUINFO_ABI cpuinfo_initialize(void) {
-#if CPUINFO_ARCH_X86 || CPUINFO_ARCH_X86_64
+#if defined(__wasi__)
+	return false;
+#elif CPUINFO_ARCH_X86 || CPUINFO_ARCH_X86_64
 #if defined(__MACH__) && defined(__APPLE__)
 	pthread_once(&init_guard, &cpuinfo_x86_mach_init);
 #elif defined(__FreeBSD__)
