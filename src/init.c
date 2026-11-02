@@ -21,7 +21,7 @@ static bool init_guard = false;
 #endif
 
 bool CPUINFO_ABI cpuinfo_initialize(void) {
-#if defined(__wasi__)
+#if defined(__wasm__)
 	return false;
 #elif CPUINFO_ARCH_X86 || CPUINFO_ARCH_X86_64
 #if defined(__MACH__) && defined(__APPLE__)
