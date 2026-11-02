@@ -319,6 +319,7 @@ ELSE()
   # C99 の厳密なモードでは _GNU_SOURCE が無いと musl の unistd.h が syscall() を宣言せず、組めない
   IF(CMAKE_SYSTEM_NAME STREQUAL "Linux")
     TARGET_COMPILE_DEFINITIONS(cpuinfo PRIVATE _GNU_SOURCE=1)
+    TARGET_COMPILE_DEFINITIONS(cpuinfo_internals PRIVATE _GNU_SOURCE=1)
   ENDIF()
 ENDIF()
 
