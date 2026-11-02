@@ -315,6 +315,11 @@ IF(CPUINFO_SUPPORTED_PLATFORM)
   ENDIF()
 ELSE()
   TARGET_COMPILE_DEFINITIONS(cpuinfo INTERFACE CPUINFO_SUPPORTED_PLATFORM=0)
+  # 対応外の CPU でも、Linux なら src/api.c の __linux__ の分岐（getcpu の syscall(2)）は組まれる。
+  # C99 の厳密なモードでは _GNU_SOURCE が無いと musl の unistd.h が syscall() を宣言せず、組めない
+  IF(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    TARGET_COMPILE_DEFINITIONS(cpuinfo PRIVATE _GNU_SOURCE=1)
+  ENDIF()
 ENDIF()
 
 ADD_LIBRARY(${PROJECT_NAME}::cpuinfo ALIAS cpuinfo)
